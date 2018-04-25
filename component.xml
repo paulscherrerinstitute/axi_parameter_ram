@@ -1617,7 +1617,7 @@
   <spirit:vendorExtensions>
     <xilinx:coreExtensions>
       <xilinx:supportedFamilies>
-        <xilinx:family xilinx:lifeCycle="Pre-Production">artix7</xilinx:family>
+        <xilinx:family xilinx:lifeCycle="Production">artix7</xilinx:family>
         <xilinx:family xilinx:lifeCycle="Beta">virtex7</xilinx:family>
         <xilinx:family xilinx:lifeCycle="Beta">qvirtex7</xilinx:family>
         <xilinx:family xilinx:lifeCycle="Beta">kintex7</xilinx:family>
@@ -1630,7 +1630,11 @@
         <xilinx:family xilinx:lifeCycle="Beta">zynq</xilinx:family>
         <xilinx:family xilinx:lifeCycle="Beta">qzynq</xilinx:family>
         <xilinx:family xilinx:lifeCycle="Beta">azynq</xilinx:family>
+        <xilinx:family xilinx:lifeCycle="Beta">spartan7</xilinx:family>
         <xilinx:family xilinx:lifeCycle="Beta">virtexu</xilinx:family>
+        <xilinx:family xilinx:lifeCycle="Beta">virtexuplus</xilinx:family>
+        <xilinx:family xilinx:lifeCycle="Beta">kintexuplus</xilinx:family>
+        <xilinx:family xilinx:lifeCycle="Beta">zynquplus</xilinx:family>
         <xilinx:family xilinx:lifeCycle="Beta">kintexu</xilinx:family>
       </xilinx:supportedFamilies>
       <xilinx:taxonomies>
