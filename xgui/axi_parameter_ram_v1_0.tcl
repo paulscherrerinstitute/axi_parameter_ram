@@ -2,9 +2,26 @@
 proc init_gui { IPINST } {
   ipgui::add_param $IPINST -name "Component_Name"
   #Adding Page
-  ipgui::add_page $IPINST -name "Page 0"
+  set AXI [ipgui::add_page $IPINST -name "AXI"]
+  ipgui::add_param $IPINST -name "C_S00_AXI_ADDR_WIDTH" -parent ${AXI}
+  ipgui::add_param $IPINST -name "C_S00_AXI_ARUSER_WIDTH" -parent ${AXI}
+  ipgui::add_param $IPINST -name "C_S00_AXI_AWUSER_WIDTH" -parent ${AXI}
+  ipgui::add_param $IPINST -name "C_S00_AXI_BUSER_WIDTH" -parent ${AXI}
+  ipgui::add_param $IPINST -name "C_S00_AXI_DATA_WIDTH" -parent ${AXI}
+  ipgui::add_param $IPINST -name "C_S00_AXI_ID_WIDTH" -parent ${AXI}
+  ipgui::add_param $IPINST -name "C_S00_AXI_RUSER_WIDTH" -parent ${AXI}
+  ipgui::add_param $IPINST -name "C_S00_AXI_WUSER_WIDTH" -parent ${AXI}
 
 
+}
+
+proc update_PARAM_VALUE.C_S00_AXI_ADDR_WIDTH { PARAM_VALUE.C_S00_AXI_ADDR_WIDTH } {
+	# Procedure called to update C_S00_AXI_ADDR_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_S00_AXI_ADDR_WIDTH { PARAM_VALUE.C_S00_AXI_ADDR_WIDTH } {
+	# Procedure called to validate C_S00_AXI_ADDR_WIDTH
+	return true
 }
 
 proc update_PARAM_VALUE.C_S00_AXI_ARUSER_WIDTH { PARAM_VALUE.C_S00_AXI_ARUSER_WIDTH } {
@@ -34,6 +51,15 @@ proc validate_PARAM_VALUE.C_S00_AXI_BUSER_WIDTH { PARAM_VALUE.C_S00_AXI_BUSER_WI
 	return true
 }
 
+proc update_PARAM_VALUE.C_S00_AXI_DATA_WIDTH { PARAM_VALUE.C_S00_AXI_DATA_WIDTH } {
+	# Procedure called to update C_S00_AXI_DATA_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_S00_AXI_DATA_WIDTH { PARAM_VALUE.C_S00_AXI_DATA_WIDTH } {
+	# Procedure called to validate C_S00_AXI_DATA_WIDTH
+	return true
+}
+
 proc update_PARAM_VALUE.C_S00_AXI_ID_WIDTH { PARAM_VALUE.C_S00_AXI_ID_WIDTH } {
 	# Procedure called to update C_S00_AXI_ID_WIDTH when any of the dependent parameters in the arguments change
 }
@@ -58,42 +84,6 @@ proc update_PARAM_VALUE.C_S00_AXI_WUSER_WIDTH { PARAM_VALUE.C_S00_AXI_WUSER_WIDT
 
 proc validate_PARAM_VALUE.C_S00_AXI_WUSER_WIDTH { PARAM_VALUE.C_S00_AXI_WUSER_WIDTH } {
 	# Procedure called to validate C_S00_AXI_WUSER_WIDTH
-	return true
-}
-
-proc update_PARAM_VALUE.C_S00_AXI_DATA_WIDTH { PARAM_VALUE.C_S00_AXI_DATA_WIDTH } {
-	# Procedure called to update C_S00_AXI_DATA_WIDTH when any of the dependent parameters in the arguments change
-}
-
-proc validate_PARAM_VALUE.C_S00_AXI_DATA_WIDTH { PARAM_VALUE.C_S00_AXI_DATA_WIDTH } {
-	# Procedure called to validate C_S00_AXI_DATA_WIDTH
-	return true
-}
-
-proc update_PARAM_VALUE.C_S00_AXI_ADDR_WIDTH { PARAM_VALUE.C_S00_AXI_ADDR_WIDTH } {
-	# Procedure called to update C_S00_AXI_ADDR_WIDTH when any of the dependent parameters in the arguments change
-}
-
-proc validate_PARAM_VALUE.C_S00_AXI_ADDR_WIDTH { PARAM_VALUE.C_S00_AXI_ADDR_WIDTH } {
-	# Procedure called to validate C_S00_AXI_ADDR_WIDTH
-	return true
-}
-
-proc update_PARAM_VALUE.C_S00_AXI_BASEADDR { PARAM_VALUE.C_S00_AXI_BASEADDR } {
-	# Procedure called to update C_S00_AXI_BASEADDR when any of the dependent parameters in the arguments change
-}
-
-proc validate_PARAM_VALUE.C_S00_AXI_BASEADDR { PARAM_VALUE.C_S00_AXI_BASEADDR } {
-	# Procedure called to validate C_S00_AXI_BASEADDR
-	return true
-}
-
-proc update_PARAM_VALUE.C_S00_AXI_HIGHADDR { PARAM_VALUE.C_S00_AXI_HIGHADDR } {
-	# Procedure called to update C_S00_AXI_HIGHADDR when any of the dependent parameters in the arguments change
-}
-
-proc validate_PARAM_VALUE.C_S00_AXI_HIGHADDR { PARAM_VALUE.C_S00_AXI_HIGHADDR } {
-	# Procedure called to validate C_S00_AXI_HIGHADDR
 	return true
 }
 

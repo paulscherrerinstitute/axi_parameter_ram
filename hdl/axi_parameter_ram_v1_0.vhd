@@ -19,8 +19,8 @@ library unisim;
 use unisim.vcomponents.all;
 
 -- Work library (application) --------------------------------------------------
-library axi_parameter_ram_v1_0_lib;
-use axi_parameter_ram_v1_0_lib.axi_slave_ipif_package.all;
+library work;
+use work.axi_slave_ipif_package.all;
 
 entity axi_parameter_ram_v1_0 is
    generic
@@ -161,7 +161,7 @@ begin
    -----------------------------------------------------------------------------
    -- AXI decode instance
    -----------------------------------------------------------------------------
-   axi_slave_reg_mem_inst : entity axi_parameter_ram_v1_0_lib.axi_slave_ipif_reg_mem
+   axi_slave_reg_mem_inst : entity work.axi_slave_ipif_reg_mem
    generic map
    (
       -- Users parameters
@@ -308,18 +308,18 @@ begin
    -- BRAM instance
    ---------------------------------------------------------------------------
    mem_wr_any <= '1' when mem_wr /= "0000" else '0';
-   bram_1024x32_inst: entity work.psi_common_tdp_ram_rbw_be
+   bram_1024x32_inst: entity work.psi_common_sp_ram_be
       generic map (
          Depth_g        => 1024,
          Width_g        => 32
       )
       port map (
-         ClkA           => s00_axi_aclk,
-         AddrA          => mem_addr(11 downto 2),
-         WrA            => mem_wr_any,
-         BeA            => mem_wr,
-         DinA           => mem_wdata,
-         DoutA          => mem_rdata
+         Clk           => s00_axi_aclk,
+         Addr          => mem_addr(11 downto 2),
+         Wr            => mem_wr_any,
+         Be            => mem_wr,
+         Din           => mem_wdata,
+         Dout          => mem_rdata
       );
 
    ---------------------------------------------------------------------------

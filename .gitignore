@@ -1,2 +1,5 @@
 #GITignore for hand-packaged IP
 /*.zip
+
+#Packaging artifacts
+scripts/package_prj
