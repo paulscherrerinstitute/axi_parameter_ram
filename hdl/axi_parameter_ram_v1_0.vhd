@@ -135,15 +135,15 @@ architecture arch_imp of axi_parameter_ram_v1_0 is
    signal   mem_wr                : std_logic_vector( 3 downto  0);
    signal   mem_wdata             : std_logic_vector(31 downto  0);
    signal   mem_rdata             : std_logic_vector(31 downto  0);
+   signal   mem_wr_any            : std_logic;
    -----------------------------------------------------------------------------
    -- FIFO Interface
    -----------------------------------------------------------------------------
    signal   fifo_rst              : std_logic := '1';  
    signal   fifo_wr               : std_logic := '0';  
-   signal   fifo_wr_data          : std_logic_vector(63 downto  0) := (others => '0');
    signal   fifo_rd_req           : std_logic_vector( 1 downto  0) := (others => '0');
    signal   fifo_rd               : std_logic := '0';  
-   signal   fifo_rd_data          : std_logic_vector(63 downto  0) := (others => '0');
+   signal   fifo_rd_data          : std_logic_vector(9 downto  0) := (others => '0');
    signal   fifo_full             : std_logic := '0';  
    signal   fifo_empty            : std_logic := '0';  
    -----------------------------------------------------------------------------
@@ -266,7 +266,7 @@ begin
    ---------------------------------------------------------------------------
    -- FIFO port
    ---------------------------------------------------------------------------
-   reg_rdata( 1)                 <= X"0000" & fifo_rd_data(15 downto  0);
+   reg_rdata( 1)                 <= X"00000" & fifo_rd_data(9 downto  0) & "00";
 
    ---------------------------------------------------------------------------
    -- Interrupt process
@@ -307,140 +307,45 @@ begin
    ---------------------------------------------------------------------------
    -- BRAM instance
    ---------------------------------------------------------------------------
-   bram_1024x32_inst: RAMB36E1
-   generic map
-   (
-      RDADDR_COLLISION_HWCONFIG   => "DELAYED_WRITE",
-      DOA_REG                     => 0,
-      DOB_REG                     => 0,
-      EN_ECC_READ                 => FALSE,
-      EN_ECC_WRITE                => FALSE,
-      INIT_A                      => X"000000000",
-      INIT_B                      => X"000000000",
-      INIT_FILE                   => "NONE",
-      RAM_MODE                    => "TDP",
-      RAM_EXTENSION_A             => "NONE",
-      RAM_EXTENSION_B             => "NONE",
-      READ_WIDTH_A                => 36,
-      WRITE_WIDTH_A               => 36,
-      READ_WIDTH_B                => 36,
-      WRITE_WIDTH_B               => 36,
-      RSTREG_PRIORITY_A           => "RSTREG",
-      RSTREG_PRIORITY_B           => "RSTREG",
-      SRVAL_A                     => X"000000000",
-      SRVAL_B                     => X"000000000",
-      SIM_COLLISION_CHECK         => "ALL",
-      SIM_DEVICE                  => "7SERIES",
-      WRITE_MODE_A                => "WRITE_FIRST",
-      WRITE_MODE_B                => "WRITE_FIRST"
-   )
-   port map
-   (
-      CLKARDCLK                   => s00_axi_aclk,
-      REGCEAREGCE                 => HIGH,
-      RSTRAMARSTRAM               => LOW,
-      RSTREGARSTREG               => LOW,
-      ENARDEN                     => HIGH,
-      WEA                         => mem_wr,
-      ADDRARDADDR( 4 downto 0)    => LOW8( 4 downto  0),
-      ADDRARDADDR(14 downto 5)    => mem_addr(11 downto  2),
-      ADDRARDADDR(15)             => LOW,
-      DIPADIP                     => LOW4,
-      DIADI                       => mem_wdata,
-      DOPADOP                     => open,
-      DOADO                       => mem_rdata,
-      CASCADEINA                  => LOW,
-      CASCADEOUTA                 => open,
-
-      CLKBWRCLK                   => s00_axi_aclk,
-      REGCEB                      => HIGH,
-      RSTRAMB                     => LOW,
-      RSTREGB                     => LOW,
-      ENBWREN                     => LOW,
-      WEBWE( 0)                   => LOW,
-      WEBWE( 1)                   => LOW,
-      WEBWE( 2)                   => LOW,
-      WEBWE( 3)                   => LOW,
-      WEBWE( 4)                   => LOW,
-      WEBWE( 5)                   => LOW,
-      WEBWE( 6)                   => LOW,
-      WEBWE( 7)                   => LOW,
-      ADDRBWRADDR                 => LOW16,
-      DIPBDIP                     => LOW4,
-      DIBDI                       => LOW32,
-      DOPBDOP                     => open,
-      DOBDO                       => open,
-      CASCADEINB                  => LOW,
-      CASCADEOUTB                 => open,
-
-      INJECTSBITERR               => LOW,
-      INJECTDBITERR               => LOW,
-      SBITERR                     => open,
-      DBITERR                     => open,
-      ECCPARITY                   => open,
-      RDADDRECC                   => open
-   );
+   mem_wr_any <= '1' when mem_wr /= "0000" else '0';
+   bram_1024x32_inst: entity work.psi_common_tdp_ram_rbw_be
+      generic map (
+         Depth_g        => 1024,
+         Width_g        => 32
+      )
+      port map (
+         ClkA           => s00_axi_aclk,
+         AddrA          => mem_addr(11 downto 2),
+         WrA            => mem_wr_any,
+         BeA            => mem_wr,
+         DinA           => mem_wdata,
+         DoutA          => mem_rdata
+      );
 
    ---------------------------------------------------------------------------
    -- FIFO instance
    ---------------------------------------------------------------------------
    fifo_rst                       <= not s00_axi_aresetn;
    fifo_wr                        <= '1' when ((mem_wr /= "0000") and (mem_addr(12) = '0')) else '0';
-   fifo_wr_data                   <= X"000000000000" & "0000" & mem_addr(11 downto  2) & "00";
-
-   fifo_1024x10_inst: FIFO36E1
-   generic map
-   (
-      INIT                        => X"000000000000000000",
-      SRVAL                       => X"000000000000000000",
-      FIFO_MODE                   => "FIFO36",
-      DATA_WIDTH                  => 18,
-      EN_SYN                      => FALSE,
-      FIRST_WORD_FALL_THROUGH     => TRUE,
-      ALMOST_EMPTY_OFFSET         => X"0080",
-      ALMOST_FULL_OFFSET          => X"0080",
-      DO_REG                      => 1,
-      IS_RST_INVERTED             => '0',
-      IS_RSTREG_INVERTED          => '0',
-      IS_WRCLK_INVERTED           => '0',
-      IS_WREN_INVERTED            => '0',
-      IS_RDCLK_INVERTED           => '0',
-      IS_RDEN_INVERTED            => '0',
-      EN_ECC_READ                 => FALSE,
-      EN_ECC_WRITE                => FALSE,
-      SIM_DEVICE                  => "7SERIES"
-   )
-   port map
-   (
-      RST                         => fifo_rst,
-      RSTREG                      => fifo_rst,
-
-      WRCLK                       => s00_axi_aclk,
-      WREN                        => fifo_wr,
-      DI                          => fifo_wr_data,
-      DIP                         => LOW8,
-      FULL                        => fifo_full,
-      ALMOSTFULL                  => open,
-      WRERR                       => open,
-      WRCOUNT                     => open,
-
-      RDCLK                       => s00_axi_aclk,
-      RDEN                        => fifo_rd,
-      REGCE                       => HIGH,
-      EMPTY                       => fifo_empty,
-      DO                          => fifo_rd_data,
-      DOP                         => open,
-      ALMOSTEMPTY                 => open,
-      RDERR                       => open,
-      RDCOUNT                     => open,
-
-      INJECTDBITERR               => LOW,
-      INJECTSBITERR               => LOW,
-      SBITERR                     => open,
-      DBITERR                     => open,
-      ECCPARITY                   => open
-   );
-
+   
+   fifo_1024x10_inst: entity work.psi_common_sync_fifo
+      generic map (
+         Width_g        => 10,
+         Depth_g        => 1024,
+         AlmFullOn_g    => false,
+         AlmEmptyOn_g   => false
+      )
+      port map (
+         Clk            => s00_axi_aclk,
+         Rst            => fifo_rst,
+         InVld          => fifo_wr,
+         InData         => mem_addr(11 downto  2),
+         OutRdy         => fifo_rd,
+         OutData        => fifo_rd_data,
+         Full           => fifo_full,
+         Empty          => fifo_empty
+      );
+      
 end arch_imp;
 
 --------------------------------------------------------------------------------

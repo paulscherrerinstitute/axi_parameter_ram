@@ -1,10 +1,10 @@
 # General Information
 
 ## Maintainer
-Goran Marinkovic [goran.marinkovic@psi.ch]
+Oliver Bründler [oliver.bruendler@psi.ch]
 
 ## Authors
-Goran Marinkovic [goran.marinkovic@psi.ch]
+Oliver Bründler [oliver.bruendler@psi.ch]
 
 ## Changelog
 See [Changelog](Changelog.md)
@@ -12,6 +12,8 @@ See [Changelog](Changelog.md)
 ## Dependencies
 
 * Libraries/VivadoIp/axi_slave_ipif_package
+* Libraries/VHDL/psi_common
+* Libraries/VHDL/psi_tb
 
 
 
