@@ -1,3 +1,9 @@
+## 1.0.2
+* Bugfixes
+  * Fixed bug in TB (wrong library name)
+* Cleanup
+  * Made project ready for continuous integration
+
 ## 1.0.1
 * Added Features
   * Added propper testbench
