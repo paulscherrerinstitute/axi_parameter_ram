@@ -10,8 +10,6 @@ library work;
 	use work.psi_tb_axi_pkg.all;
 	use work.psi_common_math_pkg.all;
 
-library axi_parameter_ram_v1_0_lib;
-
 entity axi_parameter_ram_tb is
 end entity axi_parameter_ram_tb;
 
@@ -76,7 +74,7 @@ begin
 	-- ************************************************
 	-- *** DUT
 	-- ************************************************
-	i_dut : entity axi_parameter_ram_v1_0_lib.axi_parameter_ram_v1_0
+	i_dut : entity work.axi_parameter_ram_v1_0
 		generic map (
 			-- Parameters of Axi Slave Bus Interface
 			C_S00_AXI_ID_WIDTH     	 	=> ID_WIDTH,
