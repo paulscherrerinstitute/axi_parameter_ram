@@ -36,6 +36,19 @@ add_lib_relative \
 		VivadoIp/axi_slave_ipif_package/hdl/axi_slave_ipif_package.vhd \
 	}	
 
+
+###############################################################
+# Driver Files
+###############################################################	
+set_driver_info_relative  \
+	../drivers/axi_parameter_ram_v1_0/data/axi_parameter_ram.mdd \
+	../drivers/axi_parameter_ram_v1_0/data/axi_parameter_ram.tcl 
+
+add_drivers_relative { \
+	../drivers/axi_parameter_ram_v1_0/src/axi_parameter_ram.c \
+	../drivers/axi_parameter_ram_v1_0/src/axi_parameter_ram.h \
+}
+
 ###############################################################
 # GUI Parameters
 ###############################################################
