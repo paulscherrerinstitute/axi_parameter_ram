@@ -41,7 +41,7 @@ add_lib_relative \
 ###############################################################
 
 #This component has a standard AXI slave port
-has_std_axi_if true
+has_std_axi_if false
 
 ###############################################################
 # Optional Ports

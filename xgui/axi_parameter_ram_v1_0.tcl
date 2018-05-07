@@ -1,17 +1,6 @@
 # Definitional proc to organize widgets for parameters.
 proc init_gui { IPINST } {
   ipgui::add_param $IPINST -name "Component_Name"
-  #Adding Page
-  set AXI [ipgui::add_page $IPINST -name "AXI"]
-  ipgui::add_param $IPINST -name "C_S00_AXI_ADDR_WIDTH" -parent ${AXI}
-  ipgui::add_param $IPINST -name "C_S00_AXI_ARUSER_WIDTH" -parent ${AXI}
-  ipgui::add_param $IPINST -name "C_S00_AXI_AWUSER_WIDTH" -parent ${AXI}
-  ipgui::add_param $IPINST -name "C_S00_AXI_BUSER_WIDTH" -parent ${AXI}
-  ipgui::add_param $IPINST -name "C_S00_AXI_DATA_WIDTH" -parent ${AXI}
-  ipgui::add_param $IPINST -name "C_S00_AXI_ID_WIDTH" -parent ${AXI}
-  ipgui::add_param $IPINST -name "C_S00_AXI_RUSER_WIDTH" -parent ${AXI}
-  ipgui::add_param $IPINST -name "C_S00_AXI_WUSER_WIDTH" -parent ${AXI}
-
 
 }
 
