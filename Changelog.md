@@ -1,3 +1,11 @@
+## 1.1.0 [TO BE RELEASED]
+* New Features
+  * Added SW Driver
+* Bugfixes
+  * None
+* Changed Dependencies
+  * Requires TCL/PsiIpPackage >= 1.2.0
+
 ## 1.0.2
 * Bugfixes
   * Fixed bug in TB (wrong library name)
