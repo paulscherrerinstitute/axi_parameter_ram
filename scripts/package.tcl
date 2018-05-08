@@ -40,13 +40,10 @@ add_lib_relative \
 ###############################################################
 # Driver Files
 ###############################################################	
-set_driver_info_relative  \
-	../drivers/axi_parameter_ram_v1_0/data/axi_parameter_ram.mdd \
-	../drivers/axi_parameter_ram_v1_0/data/axi_parameter_ram.tcl 
 
-add_drivers_relative { \
-	../drivers/axi_parameter_ram_v1_0/src/axi_parameter_ram.c \
-	../drivers/axi_parameter_ram_v1_0/src/axi_parameter_ram.h \
+add_drivers_relative ../drivers/axi_parameter_ram { \
+	src/axi_parameter_ram.c \
+	src/axi_parameter_ram.h \
 }
 
 ###############################################################
