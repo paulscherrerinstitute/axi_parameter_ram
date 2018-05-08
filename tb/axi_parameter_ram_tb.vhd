@@ -19,7 +19,7 @@ architecture sim of axi_parameter_ram_tb is
 	-- AXI Definition
 	-------------------------------------------------------------------------
 	constant ID_WIDTH 		: integer 	:= 1;
-	constant ADDR_WIDTH 	: integer	:= 14;
+	constant ADDR_WIDTH 	: integer	:= 13;
 	constant USER_WIDTH		: integer	:= 1;
 	constant DATA_WIDTH		: integer	:= 32;
 	constant BYTE_WIDTH		: integer	:= DATA_WIDTH/8;
@@ -78,8 +78,6 @@ begin
 		generic map (
 			-- Parameters of Axi Slave Bus Interface
 			C_S00_AXI_ID_WIDTH     	 	=> ID_WIDTH,
-			C_S00_AXI_DATA_WIDTH      	=> DATA_WIDTH,
-			C_S00_AXI_ADDR_WIDTH      	=> ADDR_WIDTH,
 			C_S00_AXI_ARUSER_WIDTH    	=> USER_WIDTH,
 			C_S00_AXI_RUSER_WIDTH     	=> USER_WIDTH,
 			C_S00_AXI_AWUSER_WIDTH    	=> USER_WIDTH,
