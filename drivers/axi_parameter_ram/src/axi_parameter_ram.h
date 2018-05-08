@@ -9,6 +9,8 @@
 //*******************************************************************************
 // Constants
 //*******************************************************************************
+
+/// @cond
 #define AXI_PARAMETER_RAM_NO_IRQ_OFFS 		0x1000
 #define AXI_PARAMETER_RAM_MEM_OFFS 			0x20
 
@@ -16,12 +18,13 @@
 #define AXI_PARAMETER_RAM_STATUS_EMPTY_MSK	(1<<0)
 
 #define AXI_PARAMETER_RAM_ADDR_OFFS			0x04
+/// @endcond
 
 //*******************************************************************************
 // Functions
 //*******************************************************************************
 /**
- * Write into the paramter RAM without generating an IRQ.
+ * @brief 	Write into the paramter RAM without generating an IRQ.
  *
  * @param 	baseAddr	Base address of the parameter ram (byte address)
  * @param 	paramAddr	Byte address of the parameter to write
