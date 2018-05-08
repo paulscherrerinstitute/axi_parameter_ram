@@ -1,8 +1,8 @@
-## 1.1.0 [TO BE RELEASED]
+## 1.1.0
 * New Features
   * Added SW Driver
 * Bugfixes
-  * None
+  * Made AXI address and data width fixed (8k/13bit address range, 32-bit data) since other values are not supported anyway
 * Changed Dependencies
   * Requires TCL/PsiIpPackage >= 1.2.0
 
