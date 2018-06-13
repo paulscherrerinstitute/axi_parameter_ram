@@ -31,7 +31,7 @@ add_lib_relative \
 	{ \
 		VHDL/psi_common/hdl/psi_common_math_pkg.vhd \
 		VHDL/psi_common/hdl/psi_common_sp_ram_rbw_be.vhd \
-		VHDL/psi_common/hdl/psi_common_tdp_ram_rbw.vhd \
+		VHDL/psi_common/hdl/psi_common_sdp_ram_rbw.vhd \
 		VHDL/psi_common/hdl/psi_common_sync_fifo.vhd \
 		VivadoIp/axi_slave_ipif_package/hdl/axi_slave_ipif_package.vhd \
 	}	

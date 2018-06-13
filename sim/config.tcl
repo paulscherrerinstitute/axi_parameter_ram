@@ -12,7 +12,7 @@ psi::sim::run_suppress 8684,3479,3813,8009,3812
 psi::sim::add_sources "$LibPath" {
 	VHDL/psi_common/hdl/psi_common_math_pkg.vhd \
 	VHDL/psi_common/hdl/psi_common_sp_ram_rbw_be.vhd \
-	VHDL/psi_common/hdl/psi_common_tdp_ram_rbw.vhd \
+	VHDL/psi_common/hdl/psi_common_sdp_ram_rbw.vhd \
 	VHDL/psi_common/hdl/psi_common_sync_fifo.vhd \
 	VHDL/psi_tb/hdl/psi_tb_txt_util.vhd \
 	VHDL/psi_tb/hdl/psi_tb_axi_pkg.vhd \
