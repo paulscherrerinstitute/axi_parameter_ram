@@ -1,4 +1,12 @@
+## 1.1.1
+
+* New Features
+  * None
+* Bugfixes
+  * Fixed AXI_PARAMETER_RAM_MEM_OFFS ins driver headerfile
+
 ## 1.1.0
+
 * New Features
   * Added SW Driver
 * Bugfixes
@@ -7,12 +15,14 @@
   * Requires TCL/PsiIpPackage >= 1.2.0
 
 ## 1.0.2
+
 * Bugfixes
   * Fixed bug in TB (wrong library name)
 * Cleanup
   * Made project ready for continuous integration
 
 ## 1.0.1
+
 * Added Features
   * Added propper testbench
 * Bugfixes
@@ -22,4 +32,5 @@
   * Requires psi_tb
 
 ## V1.00
+
 * First release (port from CVS)
