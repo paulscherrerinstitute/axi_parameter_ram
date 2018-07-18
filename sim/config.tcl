@@ -10,6 +10,7 @@ psi::sim::run_suppress 8684,3479,3813,8009,3812
 
 # libraries
 psi::sim::add_sources "$LibPath" {
+    VHDL/psi_common/hdl/psi_common_array_pkg.vhd \
 	VHDL/psi_common/hdl/psi_common_math_pkg.vhd \
 	VHDL/psi_common/hdl/psi_common_sp_ram_rbw_be.vhd \
 	VHDL/psi_common/hdl/psi_common_sdp_ram_rbw.vhd \
