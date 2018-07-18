@@ -1,9 +1,16 @@
+## 1.1.2
+
+* New Features
+  * None
+* Bugfixes
+  * Made compatible with psi\_common >= 1.10.0
+
 ## 1.1.1
 
 * New Features
   * None
 * Bugfixes
-  * Fixed AXI_PARAMETER_RAM_MEM_OFFS ins driver headerfile
+  * Fixed AXI\_PARAMETER\_RAM\_MEM\_OFFS ins driver headerfile
 
 ## 1.1.0
 
