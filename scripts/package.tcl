@@ -8,7 +8,7 @@ namespace import -force psi::ip_package::latest::*
 # General Information
 ###############################################################
 set IP_NAME axi_parameter_ram
-set IP_VERSION 1.0
+set IP_VERSION 2.0
 set IP_REVISION "auto"
 set IP_LIBRARY GPAC3
 set IP_DESCIRPTION "Parameter RAM for data exchange between CPU and EPICS"
@@ -31,8 +31,8 @@ add_lib_relative \
 	{ \
         VHDL/psi_common/hdl/psi_common_array_pkg.vhd \
 		VHDL/psi_common/hdl/psi_common_math_pkg.vhd \
-		VHDL/psi_common/hdl/psi_common_sp_ram_rbw_be.vhd \
-		VHDL/psi_common/hdl/psi_common_sdp_ram_rbw.vhd \
+		VHDL/psi_common/hdl/psi_common_sp_ram_be.vhd \
+		VHDL/psi_common/hdl/psi_common_sdp_ram.vhd \
 		VHDL/psi_common/hdl/psi_common_sync_fifo.vhd \
 		VivadoIp/axi_slave_ipif_package/hdl/axi_slave_ipif_package.vhd \
 	}	

@@ -1,3 +1,8 @@
+## 2.0.0
+
+* Changes (not reverse compatiable)
+  * Change to use new library versions after open sourcing (see README>Dependencies for detealy)
+
 ## 1.1.2
 
 * New Features
