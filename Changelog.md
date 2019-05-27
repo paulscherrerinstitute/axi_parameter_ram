@@ -1,3 +1,10 @@
+## 2.1.0
+
+* New Features
+  * Made memory depth configurable
+* Bugfixes
+  * None
+
 ## 2.0.0
 
 * Changes (not reverse compatiable)

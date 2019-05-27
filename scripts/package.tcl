@@ -8,7 +8,7 @@ namespace import -force psi::ip_package::latest::*
 # General Information
 ###############################################################
 set IP_NAME axi_parameter_ram
-set IP_VERSION 2.0
+set IP_VERSION 2.1
 set IP_REVISION "auto"
 set IP_LIBRARY GPAC3
 set IP_DESCIRPTION "Parameter RAM for data exchange between CPU and EPICS"
@@ -53,6 +53,13 @@ add_drivers_relative ../drivers/axi_parameter_ram { \
 
 #This component has a standard AXI slave port
 has_std_axi_if false
+
+#User Parameters
+gui_add_page "Configuration"
+
+gui_create_parameter "RamSizeDword_g" "Number of RAM entries (in DWORD)"
+gui_parameter_set_range 256 65536
+gui_add_parameter
 
 ###############################################################
 # Optional Ports

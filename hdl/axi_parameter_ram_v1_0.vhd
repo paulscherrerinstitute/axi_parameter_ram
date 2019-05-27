@@ -21,6 +21,7 @@ use unisim.vcomponents.all;
 -- Work library (application) --------------------------------------------------
 library work;
 use work.axi_slave_ipif_package.all;
+use work.psi_common_math_pkg.all;
 
 entity axi_parameter_ram_v1_0 is
    generic
@@ -31,7 +32,10 @@ entity axi_parameter_ram_v1_0 is
       C_S00_AXI_RUSER_WIDTH       : integer := 0;                             -- Width of optional user defined signal in read data channel
       C_S00_AXI_AWUSER_WIDTH      : integer := 0;                             -- Width of optional user defined signal in write address channel
       C_S00_AXI_WUSER_WIDTH       : integer := 0;                             -- Width of optional user defined signal in write data channel
-      C_S00_AXI_BUSER_WIDTH       : integer := 0                              -- Width of optional user defined signal in write response channel
+      C_S00_AXI_BUSER_WIDTH       : integer := 0;                              -- Width of optional user defined signal in write response channel
+      C_S_AXI_ADDR_WIDTH          : integer := 13;
+      -- Configuration
+      RamSizeDword_g              : integer := 1024                           -- Number of 32-bit RAM entries
    );
    port
    (
@@ -51,7 +55,7 @@ entity axi_parameter_ram_v1_0 is
       s00_axi_aresetn             : in    std_logic;                                             -- Global Reset Signal. This signal is low active.
       -- Read address channel
       s00_axi_arid                : in    std_logic_vector(C_S00_AXI_ID_WIDTH-1   downto 0);     -- Read address ID. This signal is the identification tag for the read address group of signals.
-      s00_axi_araddr              : in    std_logic_vector(12 downto 0);                         -- Read address. This signal indicates the initial address of a read burst transaction.
+      s00_axi_araddr              : in    std_logic_vector(C_S_AXI_ADDR_WIDTH-1 downto 0);       -- Read address. This signal indicates the initial address of a read burst transaction.
       s00_axi_arlen               : in    std_logic_vector(7 downto 0);                          -- Burst length. The burst length gives the exact number of transfers in a burst
       s00_axi_arsize              : in    std_logic_vector(2 downto 0);                          -- Burst size. This signal indicates the size of each transfer in the burst
       s00_axi_arburst             : in    std_logic_vector(1 downto 0);                          -- Burst type. The burst type and the size information, determine how the address for each transfer within the burst is calculated.
@@ -73,7 +77,7 @@ entity axi_parameter_ram_v1_0 is
       s00_axi_rready              : in    std_logic;                                             -- Read ready. This signal indicates that the master can accept the read data and response information.
       -- Write address channel
       s00_axi_awid                : in    std_logic_vector(C_S00_AXI_ID_WIDTH-1   downto 0);     -- Write Address ID
-      s00_axi_awaddr              : in    std_logic_vector(12 downto 0);                         -- Write address
+      s00_axi_awaddr              : in    std_logic_vector(C_S_AXI_ADDR_WIDTH-1 downto 0);       -- Write address
       s00_axi_awlen               : in    std_logic_vector(7 downto 0);                          -- Burst length. The burst length gives the exact number of transfers in a burst
       s00_axi_awsize              : in    std_logic_vector(2 downto 0);                          -- Burst size. This signal indicates the size of each transfer in the burst
       s00_axi_awburst             : in    std_logic_vector(1 downto 0);                          -- Burst type. The burst type and the size information, determine how the address for each transfer within the burst is calculated.
@@ -129,7 +133,7 @@ architecture arch_imp of axi_parameter_ram_v1_0 is
    -----------------------------------------------------------------------------
    -- Memory Interface
    -----------------------------------------------------------------------------
-   signal   mem_addr              : std_logic_vector(12 downto  0);
+   signal   mem_addr              : std_logic_vector(C_S_AXI_ADDR_WIDTH-1 downto  0);
    signal   mem_wr                : std_logic_vector( 3 downto  0);
    signal   mem_wdata             : std_logic_vector(31 downto  0);
    signal   mem_rdata             : std_logic_vector(31 downto  0);
@@ -148,6 +152,8 @@ architecture arch_imp of axi_parameter_ram_v1_0 is
    -- Interrupt Interface
    -----------------------------------------------------------------------------
    signal   int                   : std_logic := '0';  
+   
+   signal ram_addr                : std_logic_vector(log2ceil(RamSizeDword_g)-1 downto 0);
 
 begin
 
@@ -174,7 +180,7 @@ begin
       -- Parameters of Axi Slave Bus Interface
       C_S_AXI_ID_WIDTH            => C_S00_AXI_ID_WIDTH,
       C_S_AXI_DATA_WIDTH          => 32,
-      C_S_AXI_ADDR_WIDTH          => 13,
+      C_S_AXI_ADDR_WIDTH          => C_S_AXI_ADDR_WIDTH,
       C_S_AXI_ARUSER_WIDTH        => C_S00_AXI_ARUSER_WIDTH,
       C_S_AXI_RUSER_WIDTH         => C_S00_AXI_RUSER_WIDTH,
       C_S_AXI_AWUSER_WIDTH        => C_S00_AXI_AWUSER_WIDTH,
@@ -306,14 +312,15 @@ begin
    -- BRAM instance
    ---------------------------------------------------------------------------
    mem_wr_any <= '1' when mem_wr /= "0000" else '0';
+   ram_addr <= mem_addr(log2ceil(RamSizeDword_g)+1 downto 2);
    bram_1024x32_inst: entity work.psi_common_sp_ram_be
       generic map (
-         Depth_g        => 1024,
+         Depth_g        => RamSizeDword_g,
          Width_g        => 32
       )
       port map (
          Clk           => s00_axi_aclk,
-         Addr          => mem_addr(11 downto 2),
+         Addr          => ram_addr,
          Wr            => mem_wr_any,
          Be            => mem_wr,
          Din           => mem_wdata,
@@ -324,12 +331,12 @@ begin
    -- FIFO instance
    ---------------------------------------------------------------------------
    fifo_rst                       <= not s00_axi_aresetn;
-   fifo_wr                        <= '1' when ((mem_wr /= "0000") and (mem_addr(12) = '0')) else '0';
+   fifo_wr                        <= '1' when ((mem_wr /= "0000") and (mem_addr(log2ceil(RamSizeDword_g)+2) = '0')) else '0';
    
    fifo_1024x10_inst: entity work.psi_common_sync_fifo
       generic map (
          Width_g        => 10,
-         Depth_g        => 1024,
+         Depth_g        => RamSizeDword_g,
          AlmFullOn_g    => false,
          AlmEmptyOn_g   => false
       )
