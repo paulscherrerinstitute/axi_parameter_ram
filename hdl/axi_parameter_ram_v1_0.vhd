@@ -335,7 +335,7 @@ begin
    
    fifo_1024x10_inst: entity work.psi_common_sync_fifo
       generic map (
-         Width_g        => 10,
+         Width_g        => log2ceil(RamSizeDword_g),
          Depth_g        => RamSizeDword_g,
          AlmFullOn_g    => false,
          AlmEmptyOn_g   => false
@@ -344,7 +344,7 @@ begin
          Clk            => s00_axi_aclk,
          Rst            => fifo_rst,
          InVld          => fifo_wr,
-         InData         => mem_addr(11 downto  2),
+         InData         => ram_addr,
          OutRdy         => fifo_rd,
          OutData        => fifo_rd_data,
          Full           => fifo_full,

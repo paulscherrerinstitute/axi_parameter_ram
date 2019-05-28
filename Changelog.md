@@ -1,3 +1,11 @@
+
+## 2.1.1
+
+* New Features
+  * None
+* Bugfixes
+  * Parametrization of RAM depth did not work correctly (FIFO width was not scaled)
+
 ## 2.1.0
 
 * New Features
