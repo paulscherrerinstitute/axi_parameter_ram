@@ -16,6 +16,7 @@ psi::sim::add_sources "$LibPath" {
 	VHDL/psi_common/hdl/psi_common_sdp_ram.vhd \
 	VHDL/psi_common/hdl/psi_common_sync_fifo.vhd \
 	VHDL/psi_tb/hdl/psi_tb_txt_util.vhd \
+	VHDL/psi_tb/hdl/psi_tb_compare_pkg.vhd \
 	VHDL/psi_tb/hdl/psi_tb_axi_pkg.vhd \
 } -tag lib
 
