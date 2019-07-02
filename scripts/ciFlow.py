@@ -1,6 +1,8 @@
 import os
 
-os.chdir("../sim")
+THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+
+os.chdir(THIS_DIR + "/../sim")
 
 os.system("vsim -c -do ci.do")
 
