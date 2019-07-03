@@ -1,4 +1,4 @@
-from PsiLibDependencies import *
+from PsiFpgaLibDependencies import *
 import sys
 import os
 
