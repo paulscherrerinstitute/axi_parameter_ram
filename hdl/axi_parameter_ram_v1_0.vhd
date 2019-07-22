@@ -20,19 +20,14 @@ use unisim.vcomponents.all;
 
 -- Work library (application) --------------------------------------------------
 library work;
-use work.axi_slave_ipif_package.all;
 use work.psi_common_math_pkg.all;
+use work.psi_common_array_pkg.all;
 
 entity axi_parameter_ram_v1_0 is
    generic
    (
       -- Parameters of Axi Slave Bus Interface
       C_S00_AXI_ID_WIDTH          : integer := 1;                             -- Width of ID for for write address, write data, read address and read data
-      C_S00_AXI_ARUSER_WIDTH      : integer := 0;                             -- Width of optional user defined signal in read address channel
-      C_S00_AXI_RUSER_WIDTH       : integer := 0;                             -- Width of optional user defined signal in read data channel
-      C_S00_AXI_AWUSER_WIDTH      : integer := 0;                             -- Width of optional user defined signal in write address channel
-      C_S00_AXI_WUSER_WIDTH       : integer := 0;                             -- Width of optional user defined signal in write data channel
-      C_S00_AXI_BUSER_WIDTH       : integer := 0;                              -- Width of optional user defined signal in write response channel
       C_S_AXI_ADDR_WIDTH          : integer := 13;
       -- Configuration
       RamSizeDword_g              : integer := 1024                           -- Number of 32-bit RAM entries
@@ -62,9 +57,6 @@ entity axi_parameter_ram_v1_0 is
       s00_axi_arlock              : in    std_logic;                                             -- Lock type. Provides additional information about the atomic characteristics of the transfer.
       s00_axi_arcache             : in    std_logic_vector(3 downto 0);                          -- Memory type. This signal indicates how transactions are required to progress through a system.
       s00_axi_arprot              : in    std_logic_vector(2 downto 0);                          -- Protection type. This signal indicates the privilege and security level of the transaction, and whether the transaction is a data access or an instruction access.
-      s00_axi_arqos               : in    std_logic_vector(3 downto 0);                          -- Quality of Service, QoS identifier sent for each read transaction.
-      s00_axi_arregion            : in    std_logic_vector(3 downto 0);                          -- Region identifier. Permits a single physical interface on a slave to be used for multiple logical interfaces.
-      s00_axi_aruser              : in    std_logic_vector(C_S00_AXI_ARUSER_WIDTH-1 downto 0);   -- Optional User-defined signal in the read address channel.
       s00_axi_arvalid             : in    std_logic;                                             -- Write address valid. This signal indicates that the channel is signaling valid read address and control information.
       s00_axi_arready             : out   std_logic;                                             -- Read address ready. This signal indicates that the slave is ready to accept an address and associated control signals.
       -- Read data channel
@@ -72,7 +64,6 @@ entity axi_parameter_ram_v1_0 is
       s00_axi_rdata               : out   std_logic_vector(31 downto 0);                         -- Read Data
       s00_axi_rresp               : out   std_logic_vector(1 downto 0);                          -- Read response. This signal indicates the status of the read transfer.
       s00_axi_rlast               : out   std_logic;                                             -- Read last. This signal indicates the last transfer in a read burst.
-      s00_axi_ruser               : out   std_logic_vector(C_S00_AXI_RUSER_WIDTH-1 downto 0);    -- Optional User-defined signal in the read address channel.
       s00_axi_rvalid              : out   std_logic;                                             -- Read valid. This signal indicates that the channel is signaling the required read data.
       s00_axi_rready              : in    std_logic;                                             -- Read ready. This signal indicates that the master can accept the read data and response information.
       -- Write address channel
@@ -84,22 +75,17 @@ entity axi_parameter_ram_v1_0 is
       s00_axi_awlock              : in    std_logic;                                             -- Lock type. Provides additional information about the atomic characteristics of the transfer.
       s00_axi_awcache             : in    std_logic_vector(3 downto 0);                          -- Memory type. This signal indicates how transactions are required to progress through a system.
       s00_axi_awprot              : in    std_logic_vector(2 downto 0);                          -- Protection type. This signal indicates the privilege and security level of the transaction, and whether the transaction is a data access or an instruction access.
-      s00_axi_awqos               : in    std_logic_vector(3 downto 0);                          -- Quality of Service, QoS identifier sent for each write transaction.
-      s00_axi_awregion            : in    std_logic_vector(3 downto 0);                          -- Region identifier. Permits a single physical interface on a slave to be used for multiple logical interfaces.
-      s00_axi_awuser              : in    std_logic_vector(C_S00_AXI_AWUSER_WIDTH-1 downto 0);   -- Optional User-defined signal in the write address channel.
       s00_axi_awvalid             : in    std_logic;                                             -- Write address valid. This signal indicates that the channel is signaling valid write address and control information.
       s00_axi_awready             : out   std_logic;                                             -- Write address ready. This signal indicates that the slave is ready to accept an address and associated control signals.
       -- Write data channel
       s00_axi_wdata               : in    std_logic_vector(31    downto 0);                      -- Write Data
       s00_axi_wstrb               : in    std_logic_vector(3 downto 0);                          -- Write strobes. This signal indicates which byte lanes hold valid data. There is one write strobe bit for each eight bits of the write data bus.
       s00_axi_wlast               : in    std_logic;                                             -- Write last. This signal indicates the last transfer in a write burst.
-      s00_axi_wuser               : in    std_logic_vector(C_S00_AXI_WUSER_WIDTH-1 downto 0);    -- Optional User-defined signal in the write data channel.
       s00_axi_wvalid              : in    std_logic;                                             -- Write valid. This signal indicates that valid write data and strobes are available.
       s00_axi_wready              : out   std_logic;                                             -- Write ready. This signal indicates that the slave can accept the write data.
       -- Write response channel
       s00_axi_bid                 : out   std_logic_vector(C_S00_AXI_ID_WIDTH-1 downto 0);       -- Response ID tag. This signal is the ID tag of the write response.
       s00_axi_bresp               : out   std_logic_vector(1 downto 0);                          -- Write response. This signal indicates the status of the write transaction.
-      s00_axi_buser               : out   std_logic_vector(C_S00_AXI_BUSER_WIDTH-1 downto 0);    -- Optional User-defined signal in the write response channel.
       s00_axi_bvalid              : out   std_logic;                                             -- Write response valid. This signal indicates that the channel is signaling a valid write response.
       s00_axi_bready              : in    std_logic                                              -- Response ready. This signal indicates that the master can accept a write response.
    );
@@ -127,9 +113,9 @@ architecture arch_imp of axi_parameter_ram_v1_0 is
    -----------------------------------------------------------------------------
    constant C_NUM_REG             : integer := 4; -- only powers of 2 are allowed
    signal   reg_rd                : std_logic_vector(C_NUM_REG-1 downto  0);
-   signal   reg_rdata             : slv_reg_type(0 to C_NUM_REG-1);
+   signal   reg_rdata             : t_aslv32(0 to C_NUM_REG-1);
    signal   reg_wr                : std_logic_vector(C_NUM_REG-1 downto  0);
-   signal   reg_wdata             : slv_reg_type(0 to C_NUM_REG-1);
+   signal   reg_wdata             : t_aslv32(0 to C_NUM_REG-1);
    -----------------------------------------------------------------------------
    -- Memory Interface
    -----------------------------------------------------------------------------
@@ -165,12 +151,13 @@ begin
    -----------------------------------------------------------------------------
    -- AXI decode instance
    -----------------------------------------------------------------------------
-   axi_slave_reg_mem_inst : entity work.axi_slave_ipif_reg_mem
+   axi_slave_reg_mem_inst : entity work.psi_common_axi_slave_ipif
    generic map
    (
       -- Users parameters
-      C_NUM_REG                   => C_NUM_REG,
-      C_RESET_VAL                 =>
+      NumReg_g                    => C_NUM_REG,
+      UseMem_g                    => true,
+      ResetVal_g                  =>
       (
          X"00000000",
          X"00000000",
@@ -178,14 +165,8 @@ begin
          X"00000000"
       ),
       -- Parameters of Axi Slave Bus Interface
-      C_S_AXI_ID_WIDTH            => C_S00_AXI_ID_WIDTH,
-      C_S_AXI_DATA_WIDTH          => 32,
-      C_S_AXI_ADDR_WIDTH          => C_S_AXI_ADDR_WIDTH,
-      C_S_AXI_ARUSER_WIDTH        => C_S00_AXI_ARUSER_WIDTH,
-      C_S_AXI_RUSER_WIDTH         => C_S00_AXI_RUSER_WIDTH,
-      C_S_AXI_AWUSER_WIDTH        => C_S00_AXI_AWUSER_WIDTH,
-      C_S_AXI_WUSER_WIDTH         => C_S00_AXI_WUSER_WIDTH,
-      C_S_AXI_BUSER_WIDTH         => C_S00_AXI_BUSER_WIDTH
+      AxiIdWidth_g                => C_S00_AXI_ID_WIDTH,
+      AxiAddrWidth_g               => C_S_AXI_ADDR_WIDTH
    )
    port map
    (
@@ -204,9 +185,6 @@ begin
       s_axi_arlock                => s00_axi_arlock,
       s_axi_arcache               => s00_axi_arcache,
       s_axi_arprot                => s00_axi_arprot,
-      s_axi_arqos                 => s00_axi_arqos,
-      s_axi_arregion              => s00_axi_arregion,
-      s_axi_aruser                => s00_axi_aruser,
       s_axi_arvalid               => s00_axi_arvalid,
       s_axi_arready               => s00_axi_arready,
       -- Read data channel
@@ -214,7 +192,6 @@ begin
       s_axi_rdata                 => s00_axi_rdata,
       s_axi_rresp                 => s00_axi_rresp,
       s_axi_rlast                 => s00_axi_rlast,
-      s_axi_ruser                 => s00_axi_ruser,
       s_axi_rvalid                => s00_axi_rvalid,
       s_axi_rready                => s00_axi_rready,
       -- Write address channel
@@ -226,22 +203,17 @@ begin
       s_axi_awlock                => s00_axi_awlock,
       s_axi_awcache               => s00_axi_awcache,
       s_axi_awprot                => s00_axi_awprot,
-      s_axi_awqos                 => s00_axi_awqos,
-      s_axi_awregion              => s00_axi_awregion,
-      s_axi_awuser                => s00_axi_awuser,
       s_axi_awvalid               => s00_axi_awvalid,
       s_axi_awready               => s00_axi_awready,
       -- Write data channel
       s_axi_wdata                 => s00_axi_wdata,
       s_axi_wstrb                 => s00_axi_wstrb,
       s_axi_wlast                 => s00_axi_wlast,
-      s_axi_wuser                 => s00_axi_wuser,
       s_axi_wvalid                => s00_axi_wvalid,
       s_axi_wready                => s00_axi_wready,
       -- Write response channel
       s_axi_bid                   => s00_axi_bid,
       s_axi_bresp                 => s00_axi_bresp,
-      s_axi_buser                 => s00_axi_buser,
       s_axi_bvalid                => s00_axi_bvalid,
       s_axi_bready                => s00_axi_bready,
       --------------------------------------------------------------------------

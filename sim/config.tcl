@@ -15,14 +15,12 @@ psi::sim::add_sources "$LibPath" {
 	VHDL/psi_common/hdl/psi_common_sp_ram_be.vhd \
 	VHDL/psi_common/hdl/psi_common_sdp_ram.vhd \
 	VHDL/psi_common/hdl/psi_common_sync_fifo.vhd \
+	VHDL/psi_common/hdl/psi_common_logic_pkg.vhd \
+	VHDL/psi_common/hdl/psi_common_pl_stage.vhd \
+	VHDL/psi_common/hdl/psi_common_axi_slave_ipif.vhd \
 	VHDL/psi_tb/hdl/psi_tb_txt_util.vhd \
 	VHDL/psi_tb/hdl/psi_tb_compare_pkg.vhd \
 	VHDL/psi_tb/hdl/psi_tb_axi_pkg.vhd \
-} -tag lib
-
-# axi_slave_ipif	
-psi::sim::add_sources "$LibPath/VivadoIp/axi_slave_ipif_package/hdl" {
-	axi_slave_ipif_package.vhd \
 } -tag lib
 
 # project sources

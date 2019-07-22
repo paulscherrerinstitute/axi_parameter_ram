@@ -78,11 +78,7 @@ begin
 		generic map (
 			-- Parameters of Axi Slave Bus Interface
 			C_S00_AXI_ID_WIDTH     	 	=> ID_WIDTH,
-			C_S00_AXI_ARUSER_WIDTH    	=> USER_WIDTH,
-			C_S00_AXI_RUSER_WIDTH     	=> USER_WIDTH,
-			C_S00_AXI_AWUSER_WIDTH    	=> USER_WIDTH,
-			C_S00_AXI_WUSER_WIDTH     	=> USER_WIDTH,
-			C_S00_AXI_BUSER_WIDTH     	=> USER_WIDTH	
+			C_S_AXI_ADDR_WIDTH    		=> ADDR_WIDTH
 		)
 		port map
 		(
@@ -99,16 +95,12 @@ begin
 			s00_axi_arlock      => axi_ms.arlock,
 			s00_axi_arcache     => axi_ms.arcache,
 			s00_axi_arprot      => axi_ms.arprot,
-			s00_axi_arqos       => axi_ms.arqos,
-			s00_axi_arregion    => axi_ms.arregion,
-			s00_axi_aruser      => axi_ms.aruser,
 			s00_axi_arvalid     => axi_ms.arvalid,
 			s00_axi_arready     => axi_sm.arready,
 			s00_axi_rid         => axi_sm.rid,
 			s00_axi_rdata       => axi_sm.rdata,
 			s00_axi_rresp       => axi_sm.rresp,
 			s00_axi_rlast       => axi_sm.rlast,
-			s00_axi_ruser       => axi_sm.ruser,
 			s00_axi_rvalid      => axi_sm.rvalid,
 			s00_axi_rready      => axi_ms.rready,
 			s00_axi_awid    	=> axi_ms.awid,    
@@ -119,20 +111,15 @@ begin
 			s00_axi_awlock      => axi_ms.awlock,
 			s00_axi_awcache     => axi_ms.awcache,
 			s00_axi_awprot      => axi_ms.awprot,
-			s00_axi_awqos       => axi_ms.awqos,
-			s00_axi_awregion    => axi_ms.awregion,
-			s00_axi_awuser      => axi_ms.awuser,
 			s00_axi_awvalid     => axi_ms.awvalid,
 			s00_axi_awready     => axi_sm.awready,
 			s00_axi_wdata       => axi_ms.wdata,
 			s00_axi_wstrb       => axi_ms.wstrb,
 			s00_axi_wlast       => axi_ms.wlast,
-			s00_axi_wuser       => axi_ms.wuser,
 			s00_axi_wvalid      => axi_ms.wvalid,
 			s00_axi_wready      => axi_sm.wready,
 			s00_axi_bid         => axi_sm.bid,
 			s00_axi_bresp       => axi_sm.bresp,
-			s00_axi_buser       => axi_sm.buser,
 			s00_axi_bvalid      => axi_sm.bvalid,
 			s00_axi_bready      => axi_ms.bready
 		);

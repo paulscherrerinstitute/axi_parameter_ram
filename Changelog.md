@@ -1,3 +1,9 @@
+## 2.2.0
+
+* Features
+  * Added dependency resolution script
+* Changes
+  * Use AXI slave from *psi\_common* instead of legacy version
 
 ## 2.1.1
 

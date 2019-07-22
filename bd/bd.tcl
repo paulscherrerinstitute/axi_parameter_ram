@@ -3,7 +3,7 @@ proc init { cellpath otherInfo } {
                                                                                                              
 	set cell_handle [get_bd_cells $cellpath]                                                                 
 	set all_busif [get_bd_intf_pins $cellpath/*]		                                                     
-	set axi_standard_param_list [list ID_WIDTH AWUSER_WIDTH ARUSER_WIDTH WUSER_WIDTH RUSER_WIDTH BUSER_WIDTH]
+	set axi_standard_param_list [list ID_WIDTH]
 	set full_sbusif_list [list  ]
 			                                                                                                 
 	foreach busif $all_busif {                                                                               
@@ -26,7 +26,7 @@ proc pre_propagate {cellpath otherInfo } {
                                                                                                              
 	set cell_handle [get_bd_cells $cellpath]                                                                 
 	set all_busif [get_bd_intf_pins $cellpath/*]		                                                     
-	set axi_standard_param_list [list ID_WIDTH AWUSER_WIDTH ARUSER_WIDTH WUSER_WIDTH RUSER_WIDTH BUSER_WIDTH]
+	set axi_standard_param_list [list ID_WIDTH]
 	                                                                                                         
 	foreach busif $all_busif {	                                                                             
 		if { [string equal -nocase [get_property CONFIG.PROTOCOL $busif] "AXI4"] != 1 } {                  
@@ -57,7 +57,7 @@ proc propagate {cellpath otherInfo } {
                                                                                                              
 	set cell_handle [get_bd_cells $cellpath]                                                                 
 	set all_busif [get_bd_intf_pins $cellpath/*]		                                                     
-	set axi_standard_param_list [list ID_WIDTH AWUSER_WIDTH ARUSER_WIDTH WUSER_WIDTH RUSER_WIDTH BUSER_WIDTH]
+	set axi_standard_param_list [list ID_WIDTH]
 	                                                                                                         
 	foreach busif $all_busif {                                                                               
 		if { [string equal -nocase [get_property CONFIG.PROTOCOL $busif] "AXI4"] != 1 } {                  

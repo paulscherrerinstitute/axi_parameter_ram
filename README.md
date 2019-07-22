@@ -18,13 +18,12 @@ See [Changelog](Changelog.md)
 
 * TCL
   * [PsiSim](https://github.com/paulscherrerinstitute/PsiSim) (2.1.0 or higher, for development only)
-  * [PsiIpPackage](https://git.psi.ch/GFA/Libraries/Firmware/TCL/PsiIpPackage) (1.5.0, for development only )
-  * [PsiUtil](https://git.psi.ch/GFA/Libraries/Firmware/TCL/PsiUtil) (1.1.0, for development only )
+  * [PsiIpPackage](https://git.psi.ch/GFA/Libraries/Firmware/TCL/PsiIpPackage) (1.6.0, for development only )
+  * [PsiUtil](https://git.psi.ch/GFA/Libraries/Firmware/TCL/PsiUtil) (1.2.0, for development only )
 * VHDL
-  * [psi\_common](https://github.com/paulscherrerinstitute/psi_common) (2.0.0 or higher)
-  * [psi\_tb](https://github.com/paulscherrerinstitute/psi_tb) (2.0.0 or higher)
+  * [psi\_common](https://github.com/paulscherrerinstitute/psi_common) (2.5.0 or higher)
+  * [psi\_tb](https://github.com/paulscherrerinstitute/psi_tb) (2.2.2 or higher)
 * VivadoIp
-  * [axi\_slave\_ipif\_package](https://git.psi.ch/GFA/Libraries/Firmware/VivadoIp/axi_slave_ipif_package) (1.0.1 or higher)
   * [**axi\_parameter\_ram**](https://git.psi.ch/GFA/Libraries/Firmware/VivadoIp/axi_parameter_ram)
 
 <!-- END OF PARSED SECTION -->
