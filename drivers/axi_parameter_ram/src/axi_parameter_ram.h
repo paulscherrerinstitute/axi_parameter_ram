@@ -1,5 +1,9 @@
 #pragma once
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //*******************************************************************************
 // Includes
 //*******************************************************************************
@@ -61,3 +65,7 @@ bool AxiParameterRam_Empty(const uint32_t baseAddr);
  * @return				Address (byte address within param-ram) of the parameter access that caused an IRQ
  */
 uint16_t AxiParameterRam_GetAccessAddr(const uint32_t baseAddr);
+
+#ifdef __cplusplus
+}
+#endif
