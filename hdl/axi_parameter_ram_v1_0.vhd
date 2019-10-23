@@ -113,7 +113,7 @@ architecture arch_imp of axi_parameter_ram_v1_0 is
    -----------------------------------------------------------------------------
    constant C_NUM_REG             : integer := 4; -- only powers of 2 are allowed
    signal   reg_rd                : std_logic_vector(C_NUM_REG-1 downto  0);
-   signal   reg_rdata             : t_aslv32(0 to C_NUM_REG-1);
+   signal   reg_rdata             : t_aslv32(0 to C_NUM_REG-1) := (others => (others => '0'));
    signal   reg_wr                : std_logic_vector(C_NUM_REG-1 downto  0);
    signal   reg_wdata             : t_aslv32(0 to C_NUM_REG-1);
    -----------------------------------------------------------------------------
@@ -242,7 +242,8 @@ begin
    ---------------------------------------------------------------------------
    -- FIFO port
    ---------------------------------------------------------------------------
-   reg_rdata( 1)                 <= X"00000" & fifo_rd_data(9 downto  0) & "00";
+   reg_rdata( 1)                              <= X"00000" & fifo_rd_data(9 downto  0) & "00";
+   reg_rdata( 2)(log2ceil(RamSizeDword_g)+2)  <= '1';
 
    ---------------------------------------------------------------------------
    -- Interrupt process
