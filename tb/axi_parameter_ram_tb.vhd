@@ -67,6 +67,7 @@ architecture sim of axi_parameter_ram_tb is
 	constant MskStatus_Empty	: integer		:= 2**0;
 	constant MskStatus_Full		: integer		:= 2**1;
 	constant AddrAddr_c			: integer		:= 16#0004#;
+	constant AddrNoIrqMsk_c		: integer		:= 16#0008#;
 	
 
 begin
@@ -78,7 +79,8 @@ begin
 		generic map (
 			-- Parameters of Axi Slave Bus Interface
 			C_S00_AXI_ID_WIDTH     	 	=> ID_WIDTH,
-			C_S_AXI_ADDR_WIDTH    		=> ADDR_WIDTH
+			C_S_AXI_ADDR_WIDTH    		=> ADDR_WIDTH,
+			RamSizeDword_g				=> 1024      
 		)
 		port map
 		(
@@ -145,6 +147,7 @@ begin
 		-- *** Idle check ***
 		assert Irq = '0' report "###ERROR###: IRQ was high after reset" severity error;
 		axi_single_expect(AddrStatus_c, MskStatus_Empty, axi_ms, axi_sm, aclk, "Status was not empty after reset");
+		axi_single_expect(AddrNoIrqMsk_c, 16#1000#, axi_ms, axi_sm, aclk, "Did not read correct no-irq msk");
 		
 		-- *** Write and readback (with IRQ) ***		
 		-- Write data and read it back

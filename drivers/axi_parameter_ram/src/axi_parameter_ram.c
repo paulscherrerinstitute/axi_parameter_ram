@@ -9,7 +9,7 @@ void AxiParameterRam_WriteParam(	const uint32_t baseAddr,
 	uint32_t addr = baseAddr+AXI_PARAMETER_RAM_MEM_OFFS+paramAddr;
 	if (suppressIrq)
 	{
-		addr += AXI_PARAMETER_RAM_NO_IRQ_OFFS;
+		addr += Xil_In32(baseAddr + AXI_PARAMETER_RAM_NO_IRQ_MSK);
 	}
 	Xil_Out32(addr, value);
 }

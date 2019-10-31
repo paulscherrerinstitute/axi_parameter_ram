@@ -22,6 +22,7 @@ extern "C" {
 #define AXI_PARAMETER_RAM_STATUS_EMPTY_MSK	(1<<0)
 
 #define AXI_PARAMETER_RAM_ADDR_OFFS			0x04
+#define AXI_PARAMETER_RAM_NO_IRQ_MSK        0x08
 /// @endcond
 
 //*******************************************************************************
