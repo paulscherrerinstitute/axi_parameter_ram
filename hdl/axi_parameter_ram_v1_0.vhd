@@ -131,7 +131,7 @@ architecture arch_imp of axi_parameter_ram_v1_0 is
    signal   fifo_wr               : std_logic := '0';  
    signal   fifo_rd_req           : std_logic_vector( 1 downto  0) := (others => '0');
    signal   fifo_rd               : std_logic := '0';  
-   signal   fifo_rd_data          : std_logic_vector(9 downto  0) := (others => '0');
+   signal   fifo_rd_data          : std_logic_vector(log2ceil(RamSizeDword_g)-1 downto  0) := (others => '0');
    signal   fifo_full             : std_logic := '0';  
    signal   fifo_empty            : std_logic := '0';  
    -----------------------------------------------------------------------------
@@ -242,7 +242,8 @@ begin
    ---------------------------------------------------------------------------
    -- FIFO port
    ---------------------------------------------------------------------------
-   reg_rdata( 1)                 <= X"00000" & fifo_rd_data(9 downto  0) & "00";
+   reg_rdata( 1)(fifo_rd_data'high+2 downto 0)  <= fifo_rd_data & "00";
+   reg_rdata( 1)(31 downto fifo_rd_data'high+3)	<= (others => '0');
 
    ---------------------------------------------------------------------------
    -- Interrupt process
