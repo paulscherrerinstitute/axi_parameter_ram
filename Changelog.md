@@ -1,3 +1,8 @@
+## 2.2.1
+
+* Bugfixes
+  * Test more than 1024 parameters on HW and fix issues
+
 ## 2.2.0
 
 * Features
