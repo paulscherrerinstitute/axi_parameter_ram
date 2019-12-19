@@ -1,10 +1,10 @@
 # General Information
 
 ## Maintainer
-Oliver Bründler [oliver.bruendler@psi.ch]
+Waldemar Koprek [waldemar.koprek@psi.ch]
 
 ## Authors
-Oliver Bründler [oliver.bruendler@psi.ch]
+Oliver Bründler [oli.bruendler@gmx.ch]
 
 ## Changelog
 See [Changelog](Changelog.md)
