@@ -1,3 +1,8 @@
+## 2.2.2
+
+* Info
+  * Migration to GitHub
+
 ## 2.2.1
 
 * Bugfixes
