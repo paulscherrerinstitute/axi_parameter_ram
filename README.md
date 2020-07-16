@@ -6,6 +6,16 @@ Waldemar Koprek [waldemar.koprek@psi.ch]
 ## Authors
 Oliver Bründler [oli.bruendler@gmx.ch]
 
+## License
+This library is published under [PSI HDL Library License](License.txt), which is [LGPL](LGPL2_1.txt) plus some additional exceptions to clarify the LGPL terms in the context of firmware development.
+
+## Tagging Policy
+Stable releases are tagged in the form *major*.*minor*.*bugfix*. 
+
+* Whenever a change is not fully backward compatible, the *major* version number is incremented
+* Whenever new features are added, the *minor* version number is incremented
+* If only bugs are fixed (i.e. no functional changes are applied), the *bugfix* version is incremented
+
 ## Changelog
 See [Changelog](Changelog.md)
 
