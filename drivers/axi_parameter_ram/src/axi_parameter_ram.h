@@ -15,7 +15,6 @@ extern "C" {
 //*******************************************************************************
 
 /// @cond
-#define AXI_PARAMETER_RAM_NO_IRQ_OFFS 		0x1000
 #define AXI_PARAMETER_RAM_MEM_OFFS 			0x10
 
 #define AXI_PARAMETER_RAM_STATUS_OFFS		0x00
